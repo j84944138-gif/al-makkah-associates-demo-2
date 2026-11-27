@@ -62,7 +62,7 @@ button{font-family:inherit;cursor:pointer}
 .btn.light{border-color:rgba(247,241,229,.6);color:var(--cream)}
 .btn.light:hover{background:var(--cream);color:var(--olive)}
 .btn.small{min-height:40px;padding:8px 16px;font-size:11px}
-@media(max-width:640px){.head-actions .btn.call{display:none}.brand .b-name{font-size:19px}}
+@media(max-width:640px){.head-actions .btn.call{display:none}.brand .b-name{font-size:19px}.site-head{padding:12px 14px}.head-actions{gap:6px}.head-actions .btn{padding:8px 13px;font-size:11px;letter-spacing:.12em}}
 
 /* Chapters menu overlay */
 #menuOverlay{position:fixed;inset:0;z-index:120;background:var(--olive);color:var(--cream);display:none;flex-direction:column;padding:22px clamp(18px,5vw,56px)}
@@ -89,14 +89,15 @@ button{font-family:inherit;cursor:pointer}
 .hero-layer{position:absolute;inset:0;opacity:0}
 .hero-layer:first-child{opacity:1}
 .hero-layer img{width:100%;height:100%;object-fit:cover;transform:scale(1.08)}
-.hero-layer::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,28,18,.42),rgba(20,28,18,.08) 40%,rgba(20,28,18,.55))}
+.hero-layer::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,28,18,.52),rgba(20,28,18,.14) 38%,rgba(20,28,18,.34) 68%,rgba(20,28,18,.66))}
 .hero-copy{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:90px 20px 60px;color:var(--cream)}
 .hero-kicker{font-size:11px;letter-spacing:.44em;text-transform:uppercase;color:var(--sage);margin-bottom:18px}
 .hero-phrase{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(1000px,92vw);opacity:0}
 .hero-phrase.active{opacity:1;position:relative;left:auto;top:auto;transform:none}
-.hero-phrase h1,.hero-phrase h2{font-family:var(--serif);font-weight:500;font-size:clamp(42px,8.4vw,104px);line-height:1.02;margin:0}
+.hero-phrase h1,.hero-phrase h2{font-family:var(--serif);font-weight:500;font-size:clamp(42px,8.4vw,104px);line-height:1.02;margin:0;text-shadow:0 2px 34px rgba(20,28,18,.45),0 1px 6px rgba(20,28,18,.35)}
 .hero-phrase h1 em,.hero-phrase h2 em{font-style:italic;color:var(--brass-2)}
-.hero-phrase p{max-width:560px;margin:20px auto 0;color:rgba(247,241,229,.88);font-size:clamp(15px,1.6vw,18px)}
+.hero-phrase p{max-width:560px;margin:20px auto 0;color:rgba(247,241,229,.94);font-size:clamp(15px,1.6vw,18px);text-shadow:0 1px 16px rgba(20,28,18,.55)}
+.hero-kicker{text-shadow:0 1px 12px rgba(20,28,18,.6)}
 .hero-meta{position:absolute;left:0;right:0;bottom:0;z-index:4;display:flex;justify-content:space-between;align-items:flex-end;gap:14px;padding:22px 92px 22px clamp(16px,4vw,44px);color:var(--cream)}
 .hero-meta .hm{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:rgba(247,241,229,.85)}
 .hero-meta .hm b{display:block;font-family:var(--serif);font-size:20px;letter-spacing:.06em;text-transform:none;font-weight:500;color:var(--cream)}
@@ -105,14 +106,28 @@ button{font-family:inherit;cursor:pointer}
 @keyframes drip{0%{transform:scaleY(.3);transform-origin:top}50%{transform:scaleY(1)}100%{transform:scaleY(.3);transform-origin:top}}
 @media(min-width:1024px){.hero-phrase{position:absolute}.hero-phrase.active{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}}
 @media(max-width:1023px){
-  .arch-wipe .arch-shape{height:62px}
-  .hero-meta{bottom:58px}
+  /* No arch overlay on touch / mobile: the hero photo ends clean and full-bleed,
+     and the next section follows directly with no pale dome in between. */
+  .arch-wipe{display:none}
+  .hero-meta{bottom:0}
   .hero-meta .hm b{font-size:17px}
 }
+@media(max-width:640px){
+  .hero-copy{padding:84px 16px 92px}
+  .hero-meta{padding:16px 92px 18px 16px;gap:8px;align-items:flex-end}
+  .hero-meta .hm{font-size:9px;letter-spacing:.18em}
+  .hero-meta .hm b{font-size:15px}
+  .scroll-hint{font-size:9px;letter-spacing:.22em;gap:6px}
+  .scroll-hint i{height:34px}
+}
 
-/* Arch wipe divider */
+/* Arch wipe divider — desktop scroll transition only.
+   Hidden at rest (opacity 0, scaled down): GSAP scrub grows it at the very end
+   of the hero journey so it reads as the next section opening up, in that
+   section's own cream background — never as a static shape sitting on the photo.
+   Without GSAP (or with reduced motion) it simply never appears. */
 .arch-wipe{height:0;position:relative;z-index:5}
-.arch-wipe .arch-shape{position:absolute;left:50%;bottom:-1px;transform:translateX(-50%);width:min(680px,88vw);height:120px;background:var(--cream);border-radius:999px 999px 0 0}
+.arch-wipe .arch-shape{position:absolute;left:0;right:0;margin:0 auto;bottom:-1px;width:min(620px,60vw);height:84px;background:var(--cream);border-radius:999px 999px 0 0;opacity:0;transform:scaleX(.3);transform-origin:50% 100%;pointer-events:none}
 
 /* ---------- Sections common ---------- */
 section{position:relative}
@@ -177,7 +192,7 @@ section{position:relative}
 .build-steps .bs b{font-family:var(--serif);font-style:italic;color:var(--brass-2);font-size:20px;font-weight:500}
 .build-steps .bs h3{font-family:var(--serif);font-size:24px;margin:0 0 4px;font-weight:600}
 .build-steps .bs p{margin:0;color:rgba(247,241,229,.75);font-size:14.5px}
-@media(max-width:900px){.build-grid{grid-template-columns:1fr}.build-imgs .bi-small{bottom:-30px}}
+@media(max-width:900px){.build-grid{grid-template-columns:1fr}.build-imgs{margin-bottom:38px}.build-imgs .bi-small{bottom:-30px;right:0}}
 
 /* ---------- Horizontal journey ---------- */
 #journey{background:var(--paper);overflow:hidden}
@@ -707,8 +722,9 @@ footer a:hover{color:var(--brass-2)}
           onStart: function(){ ph.classList.add('active'); },
           onReverseComplete: function(){ ph.classList.remove('active'); }}, i - 0.38);
       });
-      /* Arch wipe grows as hero ends */
-      heroTl.fromTo('#archShape', {scaleX: 0.3, opacity: 0.4}, {scaleX: 1, opacity: 1, duration: 0.6, ease: 'power2.out'}, 2.6);
+      /* Arch wipe grows only as the hero journey ends — it starts hidden
+         (CSS opacity 0 / scaleX .3) and opens into the next section's top edge. */
+      heroTl.to('#archShape', {scaleX: 1, opacity: 1, duration: 0.6, ease: 'power2.out'}, 2.6);
 
       /* Build parallax */
       gsap.utils.toArray('.parallax-img').forEach(function(img){
